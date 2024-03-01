@@ -1,5 +1,5 @@
 body {
-	background-color: #fff;
+	background-color: #000;
 }
 
 .todo-container {
@@ -23,18 +23,25 @@ body {
 }
 
 .todo-item {
+	background-color: #fff;
 	display: flex;
 	align-items: center;
 	padding: 10px;
 	border-bottom: 1px solid #ccc;
-}
-
-.checkbox {
-	margin-right: 10px;
+	gap: 5px;
 }
 
 .todo-text {
 	flex-grow: 1;
+}
+
+.edit-todo {
+	background-color: #9ade7b;
+	color: white;
+	border: none;
+	padding: 5px 10px;
+	border-radius: 5px;
+	cursor: pointer;
 }
 
 .delete-todo {

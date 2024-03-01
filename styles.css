@@ -1,0 +1,17 @@
+body {
+	background-color: #fff;
+}
+
+.todo-container {
+	margin: 10% auto;
+	padding: 0 30%;
+}
+
+#add-todo {
+	background-color: #663dff;
+	color: white;
+	border: none;
+	padding: 5px 10px;
+	border-radius: 5px;
+	cursor: pointer;
+}

@@ -21,3 +21,31 @@ body {
 	border-radius: 5px;
 	cursor: pointer;
 }
+
+.todo-item {
+	display: flex;
+	align-items: center;
+	padding: 10px;
+	border-bottom: 1px solid #ccc;
+}
+
+.checkbox {
+	margin-right: 10px;
+}
+
+.todo-text {
+	flex-grow: 1;
+}
+
+.delete-todo {
+	background-color: #ff6347;
+	color: white;
+	border: none;
+	padding: 5px 10px;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+.delete-todo:hover {
+	background-color: #ff473d;
+}

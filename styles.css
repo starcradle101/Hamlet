@@ -7,6 +7,12 @@ body {
 	padding: 0 30%;
 }
 
+@media (max-width: 768px) {
+	.todo-container {
+		padding: 0 5%;
+	}
+}
+
 #add-todo {
 	background-color: #663dff;
 	color: white;

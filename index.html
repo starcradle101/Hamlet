@@ -10,9 +10,30 @@
 	<body>
 		<div class="todo-container">
 			<form class="todo-creator" action="">
-				<input type="text" id="newTodoInput" />
+				<input type="text" id="new-todo-input" />
 				<button id="add-todo">Add</button>
 			</form>
 		</div>
+
+		<script>
+			const addTodoBtn = document.getElementById('add-todo');
+			const todoContainer = document.querySelector('.todo-container');
+			const newTodoInput = document.getElementById('new-todo-input');
+
+			addTodoBtn.addEventListener('click', (e) => {
+				const todoText = newTodoInput.value.trim();
+				if (todoText !== '') {
+					const todoItem = document.createElement('div');
+					todoItem.classList.add('todo-item');
+					todoItem.innerHTML = `
+            <p class="todo-text">${todoText}</p>
+            <input type="checkbox" class="checkbox" />
+            <button class="delete-todo">Delete</button>
+          `;
+					todoContainer.appendChild(todoItem);
+					newTodoInput.value = '';
+				}
+			});
+		</script>
 	</body>
 </html>

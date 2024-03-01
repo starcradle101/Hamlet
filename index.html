@@ -21,6 +21,8 @@
 			const newTodoInput = document.getElementById('new-todo-input');
 
 			addTodoBtn.addEventListener('click', (e) => {
+				e.preventDefault();
+
 				const todoText = newTodoInput.value.trim();
 				if (todoText !== '') {
 					const todoItem = document.createElement('div');

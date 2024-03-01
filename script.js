@@ -1,31 +1,42 @@
+const TODO_CONTAINER = document.querySelector('.todo-container');
+const MODAL_CONTAINER = document.getElementById('modalContainer');
+const ADD_TODO_BTN = document.getElementById('add-todo');
+const NEW_TODO_INPUT = document.getElementById('new-todo-input');
+const EDIT_TODO_INPUT = document.getElementById('edit-todo-input');
+const CANCEL_EDIT_BTN = document.getElementById('cancel-edit');
+const SAVE_TODO_BTN = document.getElementById('save-todo');
+
 function addTodo() {
-	const todoText = newTodoInput.value.trim();
+	const todoText = NEW_TODO_INPUT.value.trim();
 	if (todoText !== '') {
-		const todoItem = document.createElement('div');
-		todoItem.classList.add('todo-item');
-		todoItem.innerHTML = `
-          <p class="todo-text">${todoText}</p>
-          <input type="checkbox" class="checkbox" />
-          <button class="edit-todo">Edit</button>
-          <button class="delete-todo">Delete</button>
-      `;
-		todoContainer.appendChild(todoItem);
-		newTodoInput.value = '';
+		const todoItem = createTodoItem(todoText);
+		TODO_CONTAINER.appendChild(todoItem);
+		NEW_TODO_INPUT.value = '';
 
 		const deleteBtn = todoItem.querySelector('.delete-todo');
 		deleteBtn.addEventListener('click', deleteTodo);
 
 		const editBtn = todoItem.querySelector('.edit-todo');
-		editBtn.addEventListener('click', () => {
-			editTodo(todoItem);
-		});
+		editBtn.addEventListener('click', () => editTodo(todoItem));
 	}
+}
+
+function createTodoItem(text) {
+	const todoItem = document.createElement('div');
+	todoItem.classList.add('todo-item');
+	todoItem.innerHTML = `
+        <p class="todo-text">${text}</p>
+        <input type="checkbox" class="checkbox" />
+        <button class="edit-todo">Edit</button>
+        <button class="delete-todo">Delete</button>
+    `;
+	return todoItem;
 }
 
 function editTodo(todoItem) {
 	const todoText = todoItem.querySelector('.todo-text').textContent;
-	editTodoInput.value = todoText;
-	modalContainer.classList.remove('hidden');
+	EDIT_TODO_INPUT.value = todoText;
+	MODAL_CONTAINER.classList.remove('hidden');
 	currentEditTodoItem = todoItem;
 }
 
@@ -34,34 +45,27 @@ function deleteTodo() {
 }
 
 function hideModal() {
-	modalContainer.classList.add('hidden');
+	MODAL_CONTAINER.classList.add('hidden');
+}
+
+function saveTodo() {
+	const editedTodoText = EDIT_TODO_INPUT.value.trim();
+	if (editedTodoText !== '') {
+		currentEditTodoItem.querySelector('.todo-text').textContent =
+			editedTodoText;
+		hideModal();
+	}
 }
 
 function initialize() {
-	addTodoBtn.addEventListener('click', (e) => {
+	ADD_TODO_BTN.addEventListener('click', (e) => {
 		e.preventDefault();
 		addTodo();
 	});
 
-	cancelEditBtn.addEventListener('click', hideModal);
+	CANCEL_EDIT_BTN.addEventListener('click', hideModal);
 
-	saveTodoBtn.addEventListener('click', () => {
-		const editedTodoText = editTodoInput.value.trim();
-		if (editedTodoText !== '') {
-			currentEditTodoItem.querySelector('.todo-text').textContent =
-				editedTodoText;
-			hideModal();
-		}
-	});
+	SAVE_TODO_BTN.addEventListener('click', saveTodo);
 }
-
-const addTodoBtn = document.getElementById('add-todo');
-const todoContainer = document.querySelector('.todo-container');
-const newTodoInput = document.getElementById('new-todo-input');
-const modalContainer = document.getElementById('modalContainer');
-const editTodoInput = document.getElementById('edit-todo-input');
-const cancelEditBtn = document.getElementById('cancel-edit');
-const saveTodoBtn = document.getElementById('save-todo');
-let currentEditTodoItem;
 
 initialize();

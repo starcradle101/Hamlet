@@ -44,6 +44,10 @@ body {
 	cursor: pointer;
 }
 
+.edit-todo:hover {
+	background-color: #88d663;
+}
+
 .delete-todo {
 	background-color: #ff6347;
 	color: white;

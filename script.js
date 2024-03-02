@@ -1,5 +1,5 @@
 const TODO_CONTAINER = document.querySelector('.todo-container');
-const MODAL_CONTAINER = document.getElementById('modalContainer');
+const MODAL_CONTAINER = document.getElementById('modal-container');
 const ADD_TODO_BTN = document.getElementById('add-todo');
 const NEW_TODO_INPUT = document.getElementById('new-todo-input');
 const EDIT_TODO_INPUT = document.getElementById('edit-todo-input');
@@ -65,6 +65,7 @@ function editTodo(todoItem) {
 	const todoText = todoItem.querySelector('.todo-text').textContent;
 	EDIT_TODO_INPUT.value = todoText;
 	MODAL_CONTAINER.classList.remove('hidden');
+	TODO_CONTAINER.style.filter = 'blur(4px)';
 	currentEditTodoItem = todoItem;
 }
 
@@ -75,6 +76,7 @@ function deleteTodoItem() {
 
 function hideModal() {
 	MODAL_CONTAINER.classList.add('hidden');
+	TODO_CONTAINER.style.filter = '';
 }
 
 function saveTodoItem() {

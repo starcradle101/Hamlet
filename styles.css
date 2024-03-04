@@ -2,8 +2,14 @@ body {
 	background-color: #000;
 }
 
+h1 {
+	text-align: center;
+	color: #663dff;
+	margin-top: 10%;
+}
+
 .todo-container {
-	margin: 10% auto;
+	margin: auto;
 	padding: 0 30%;
 }
 
@@ -17,13 +23,19 @@ body {
 	display: flex;
 	justify-content: space-between;
 	gap: 10px;
-	margin-bottom: 10px;
+	margin-bottom: 15px;
 	background-color: #fff;
 	padding: 5px 10px;
 }
 
 #new-todo-input {
 	flex-grow: 2;
+	border: none;
+	border-bottom: 1px solid #ccc;
+}
+
+#new-todo-input:focus {
+	outline: none;
 }
 
 #add-todo {
@@ -46,6 +58,26 @@ body {
 
 .todo-text {
 	flex-grow: 1;
+}
+
+.todo-filter {
+	display: flex;
+	justify-content: flex-end;
+	margin-bottom: 5px;
+}
+
+.todo-filter > * {
+	color: #fff;
+}
+
+.todo-filter > button {
+	cursor: pointer;
+	background-color: #000;
+	border: none;
+}
+
+.todo-filter > button:hover {
+	color: #663dff;
 }
 
 .edit-todo {

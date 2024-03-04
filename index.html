@@ -12,7 +12,12 @@
 		<h1>HAMLET</h1>
 		<div class="todo-container">
 			<form class="todo-creator" action="">
-				<input type="text" id="new-todo-input" />
+				<div class="todo-input-container">
+					<input type="text" id="new-todo-input" />
+					<span class="add-validation"
+						>Please enter a todo item before adding.</span
+					>
+				</div>
 				<button id="add-todo">Add</button>
 			</form>
 			<div class="todo-filter">
@@ -26,7 +31,12 @@
 
 		<div id="modal-container" class="hidden">
 			<div id="modal-content">
-				<input type="text" id="edit-todo-input" />
+				<div id="todo-edit-container">
+					<input type="text" id="edit-todo-input" />
+					<span id="edit-validation"
+						>Please enter a todo item before edit.</span
+					>
+				</div>
 				<div id="modal-btn-container">
 					<button id="save-todo">Save</button>
 					<button id="cancel-edit">Cancel</button>

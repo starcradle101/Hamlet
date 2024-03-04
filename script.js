@@ -8,8 +8,10 @@ import {
 const TODO_CONTAINER = document.querySelector('.todo-container');
 const MODAL_CONTAINER = document.getElementById('modal-container');
 const ADD_TODO_BTN = document.getElementById('add-todo');
+const TODO_ADD_VALIDATION = document.querySelector('.add-validation');
 const NEW_TODO_INPUT = document.getElementById('new-todo-input');
 const EDIT_TODO_INPUT = document.getElementById('edit-todo-input');
+const TODO_EDIT_VALIDATION = document.getElementById('edit-validation');
 const CANCEL_EDIT_BTN = document.getElementById('cancel-edit');
 const SAVE_TODO_BTN = document.getElementById('save-todo');
 const TODO_FILTER_ALL = document.querySelector('.all');
@@ -19,6 +21,10 @@ let currentEditTodoItem = null;
 
 function generateUniqueId() {
 	return Date.now().toString(36);
+}
+
+function isInputEmpty(element) {
+	return element.value.trim() === '';
 }
 
 function loadItemsFromLocalStorage() {
@@ -106,25 +112,19 @@ function deleteTodoItem() {
 	deleteItemFromLocalStorage('todoItems', itemId);
 }
 
-function alertInput() {
-	let input = document.getElementById('new-todo-input').value;
-	if (input.trim() === '') {
-		alert('빈 값은 입력될 수 없습니다!');
-		return false;
-	}
-	return true;
-}
-
 function hideModal() {
 	MODAL_CONTAINER.classList.add('hidden');
+	TODO_EDIT_VALIDATION.style.display = 'none';
 	TODO_CONTAINER.style.filter = '';
 }
 
 function saveTodoItem() {
 	const editedTodoText = EDIT_TODO_INPUT.value.trim();
-	if (!editedTodoText) {
-		alert('수정할 내용을 입력하세요!');
+	if (isInputEmpty(EDIT_TODO_INPUT)) {
+		TODO_EDIT_VALIDATION.style.display = 'inline';
 		return;
+	} else {
+		TODO_EDIT_VALIDATION.style.display = 'none';
 	}
 	const itemId = currentEditTodoItem.getAttribute('data-id');
 	currentEditTodoItem.querySelector('.todo-text').textContent = editedTodoText;
@@ -155,9 +155,14 @@ function initialize() {
 	TODO_FILTER_UNFINISHED.addEventListener('click', filterTodoItems);
 	ADD_TODO_BTN.addEventListener('click', (e) => {
 		e.preventDefault();
-		if (!alertInput()) {
+
+		if (isInputEmpty(NEW_TODO_INPUT)) {
+			TODO_ADD_VALIDATION.style.display = 'inline';
 			return;
+		} else {
+			TODO_ADD_VALIDATION.style.display = 'none';
 		}
+
 		const todoText = NEW_TODO_INPUT.value.trim();
 		const todoItem = createTodoItem(todoText);
 		TODO_CONTAINER.appendChild(todoItem);

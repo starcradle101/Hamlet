@@ -59,7 +59,7 @@ h1 {
 .todo-input-container > span {
 	font-size: 14px;
 	position: absolute;
-	top: 40px;
+	top: 44px;
 	display: none;
 	color: red;
 }

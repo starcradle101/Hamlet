@@ -1,3 +1,10 @@
+import {
+	loadFromLocalStorage,
+	addItemToLocalStorage,
+	updateItemInLocalStorage,
+	deleteItemFromLocalStorage,
+} from './modules/storage.js';
+
 const TODO_CONTAINER = document.querySelector('.todo-container');
 const MODAL_CONTAINER = document.getElementById('modal-container');
 const ADD_TODO_BTN = document.getElementById('add-todo');
@@ -15,7 +22,7 @@ function generateUniqueId() {
 }
 
 function loadItemsFromLocalStorage() {
-	const todoItems = JSON.parse(localStorage.getItem('todoItems')) || [];
+	const todoItems = loadFromLocalStorage('todoItems');
 	const fragment = document.createDocumentFragment();
 
 	todoItems.forEach((item) => {
@@ -33,32 +40,21 @@ function loadItemsFromLocalStorage() {
 }
 
 function saveItemInLocalStorage(todoItem, isComplete = false) {
-	const todoItems = JSON.parse(localStorage.getItem('todoItems')) || [];
 	const newItem = {
 		id: todoItem.getAttribute('data-id'),
 		text: todoItem.querySelector('.todo-text').textContent,
 		isComplete,
 	};
-	todoItems.push(newItem);
-	localStorage.setItem('todoItems', JSON.stringify(todoItems));
+
+	addItemToLocalStorage('todoItems', newItem);
 }
 
 function updateLocalStorage(itemId, newText) {
-	const todoItems = JSON.parse(localStorage.getItem('todoItems')) || [];
-	const itemIndex = todoItems.findIndex((item) => item.id === itemId);
-	if (itemIndex !== -1) {
-		todoItems[itemIndex].text = newText;
-		localStorage.setItem('todoItems', JSON.stringify(todoItems));
-	}
+	updateItemInLocalStorage('todoItems', itemId, { text: newText });
 }
 
 function updateItemStatus(itemId, isComplete) {
-	const todoItems = JSON.parse(localStorage.getItem('todoItems')) || [];
-	const itemIndex = todoItems.findIndex((item) => item.id === itemId);
-	if (itemIndex !== -1) {
-		todoItems[itemIndex].isComplete = isComplete;
-		localStorage.setItem('todoItems', JSON.stringify(todoItems));
-	}
+	updateItemInLocalStorage('todoItems', itemId, { isComplete });
 }
 
 function addTodoItemEventListeners(todoItem) {
@@ -66,7 +62,7 @@ function addTodoItemEventListeners(todoItem) {
 	deleteBtn.addEventListener('click', deleteTodoItem);
 
 	const editBtn = todoItem.querySelector('.edit-todo');
-	editBtn.addEventListener('click', () => editTodoItem(todoItem));
+	editBtn.addEventListener('click', () => editTodo(todoItem));
 
 	const checkbox = todoItem.querySelector('.checkbox');
 	checkbox.addEventListener('change', () => {
@@ -74,7 +70,6 @@ function addTodoItemEventListeners(todoItem) {
 		const isComplete = checkbox.checked;
 		updateItemStatus(itemId, isComplete);
 
-		// 체크박스 상태에 따라 스타일 업데이트
 		if (isComplete) {
 			todoItem.querySelector('.todo-text').style.textDecoration =
 				'line-through';
@@ -108,13 +103,7 @@ function editTodo(todoItem) {
 function deleteTodoItem() {
 	this.parentElement.remove();
 	const itemId = this.parentElement.getAttribute('data-id');
-	deleteItemFromLocalStorage(itemId);
-}
-
-function deleteItemFromLocalStorage(itemId) {
-	const todoItems = JSON.parse(localStorage.getItem('todoItems')) || [];
-	const updatedTodoItems = todoItems.filter((item) => item.id !== itemId);
-	localStorage.setItem('todoItems', JSON.stringify(updatedTodoItems));
+	deleteItemFromLocalStorage('todoItems', itemId);
 }
 
 function alertInput() {

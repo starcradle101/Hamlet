@@ -9,18 +9,28 @@
 	</head>
 
 	<body>
+		<h1>HAMLET</h1>
 		<div class="todo-container">
 			<form class="todo-creator" action="">
 				<input type="text" id="new-todo-input" />
 				<button id="add-todo">Add</button>
 			</form>
+			<div class="todo-filter">
+				<button class="all">All</button>
+				<span>/</span>
+				<button class="finished">Finished</button>
+				<span>/</span>
+				<button class="unfinished">Unfinished</button>
+			</div>
 		</div>
 
-		<div id="modalContainer" class="hidden">
-			<div id="modalContent">
+		<div id="modal-container" class="hidden">
+			<div id="modal-content">
 				<input type="text" id="edit-todo-input" />
-				<button id="save-todo">Save</button>
-				<button id="cancel-edit">Cancel</button>
+				<div id="modal-btn-container">
+					<button id="save-todo">Save</button>
+					<button id="cancel-edit">Cancel</button>
+				</div>
 			</div>
 		</div>
 

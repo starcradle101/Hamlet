@@ -1,8 +1,17 @@
+import {
+	loadFromLocalStorage,
+	addItemToLocalStorage,
+	updateItemInLocalStorage,
+	deleteItemFromLocalStorage,
+} from './modules/storage.js';
+
 const TODO_CONTAINER = document.querySelector('.todo-container');
 const MODAL_CONTAINER = document.getElementById('modal-container');
 const ADD_TODO_BTN = document.getElementById('add-todo');
+const TODO_ADD_VALIDATION = document.querySelector('.add-validation');
 const NEW_TODO_INPUT = document.getElementById('new-todo-input');
 const EDIT_TODO_INPUT = document.getElementById('edit-todo-input');
+const TODO_EDIT_VALIDATION = document.getElementById('edit-validation');
 const CANCEL_EDIT_BTN = document.getElementById('cancel-edit');
 const SAVE_TODO_BTN = document.getElementById('save-todo');
 const TODO_FILTER_ALL = document.querySelector('.all');
@@ -14,8 +23,12 @@ function generateUniqueId() {
 	return Date.now().toString(36);
 }
 
+function isInputEmpty(element) {
+	return element.value.trim() === '';
+}
+
 function loadItemsFromLocalStorage() {
-	const todoItems = JSON.parse(localStorage.getItem('todoItems')) || [];
+	const todoItems = loadFromLocalStorage('todoItems');
 	const fragment = document.createDocumentFragment();
 
 	todoItems.forEach((item) => {
@@ -33,32 +46,40 @@ function loadItemsFromLocalStorage() {
 }
 
 function saveItemInLocalStorage(todoItem, isComplete = false) {
-	const todoItems = JSON.parse(localStorage.getItem('todoItems')) || [];
 	const newItem = {
 		id: todoItem.getAttribute('data-id'),
 		text: todoItem.querySelector('.todo-text').textContent,
 		isComplete,
 	};
-	todoItems.push(newItem);
-	localStorage.setItem('todoItems', JSON.stringify(todoItems));
+
+	addItemToLocalStorage('todoItems', newItem);
 }
 
 function updateLocalStorage(itemId, newText) {
-	const todoItems = JSON.parse(localStorage.getItem('todoItems')) || [];
-	const itemIndex = todoItems.findIndex((item) => item.id === itemId);
-	if (itemIndex !== -1) {
-		todoItems[itemIndex].text = newText;
-		localStorage.setItem('todoItems', JSON.stringify(todoItems));
-	}
+	updateItemInLocalStorage('todoItems', itemId, { text: newText });
 }
 
 function updateItemStatus(itemId, isComplete) {
-	const todoItems = JSON.parse(localStorage.getItem('todoItems')) || [];
-	const itemIndex = todoItems.findIndex((item) => item.id === itemId);
-	if (itemIndex !== -1) {
-		todoItems[itemIndex].isComplete = isComplete;
-		localStorage.setItem('todoItems', JSON.stringify(todoItems));
+	updateItemInLocalStorage('todoItems', itemId, { isComplete });
+}
+
+function handleAddTodoButtonClick(e) {
+	e.preventDefault();
+
+	if (isInputEmpty(NEW_TODO_INPUT)) {
+		console.log(NEW_TODO_INPUT);
+		TODO_ADD_VALIDATION.style.display = 'inline';
+		return;
+	} else {
+		TODO_ADD_VALIDATION.style.display = 'none';
 	}
+
+	const todoText = NEW_TODO_INPUT.value.trim();
+	const todoItem = createTodoItem(todoText);
+	TODO_CONTAINER.appendChild(todoItem);
+	addTodoItemEventListeners(todoItem);
+	saveItemInLocalStorage(todoItem);
+	NEW_TODO_INPUT.value = '';
 }
 
 function addTodoItemEventListeners(todoItem) {
@@ -66,7 +87,7 @@ function addTodoItemEventListeners(todoItem) {
 	deleteBtn.addEventListener('click', deleteTodoItem);
 
 	const editBtn = todoItem.querySelector('.edit-todo');
-	editBtn.addEventListener('click', () => editTodoItem(todoItem));
+	editBtn.addEventListener('click', () => editTodo(todoItem));
 
 	const checkbox = todoItem.querySelector('.checkbox');
 	checkbox.addEventListener('change', () => {
@@ -74,7 +95,6 @@ function addTodoItemEventListeners(todoItem) {
 		const isComplete = checkbox.checked;
 		updateItemStatus(itemId, isComplete);
 
-		// 체크박스 상태에 따라 스타일 업데이트
 		if (isComplete) {
 			todoItem.querySelector('.todo-text').style.textDecoration =
 				'line-through';
@@ -108,34 +128,22 @@ function editTodo(todoItem) {
 function deleteTodoItem() {
 	this.parentElement.remove();
 	const itemId = this.parentElement.getAttribute('data-id');
-	deleteItemFromLocalStorage(itemId);
-}
-
-function deleteItemFromLocalStorage(itemId) {
-	const todoItems = JSON.parse(localStorage.getItem('todoItems')) || [];
-	const updatedTodoItems = todoItems.filter((item) => item.id !== itemId);
-	localStorage.setItem('todoItems', JSON.stringify(updatedTodoItems));
-}
-
-function alertInput() {
-	let input = document.getElementById('new-todo-input').value;
-	if (input.trim() === '') {
-		alert('빈 값은 입력될 수 없습니다!');
-		return false;
-	}
-	return true;
+	deleteItemFromLocalStorage('todoItems', itemId);
 }
 
 function hideModal() {
 	MODAL_CONTAINER.classList.add('hidden');
+	TODO_EDIT_VALIDATION.style.display = 'none';
 	TODO_CONTAINER.style.filter = '';
 }
 
 function saveTodoItem() {
 	const editedTodoText = EDIT_TODO_INPUT.value.trim();
-	if (!editedTodoText) {
-		alert('수정할 내용을 입력하세요!');
+	if (isInputEmpty(EDIT_TODO_INPUT)) {
+		TODO_EDIT_VALIDATION.style.display = 'inline';
 		return;
+	} else {
+		TODO_EDIT_VALIDATION.style.display = 'none';
 	}
 	const itemId = currentEditTodoItem.getAttribute('data-id');
 	currentEditTodoItem.querySelector('.todo-text').textContent = editedTodoText;
@@ -164,18 +172,8 @@ function initialize() {
 	TODO_FILTER_ALL.addEventListener('click', filterTodoItems);
 	TODO_FILTER_FINISHED.addEventListener('click', filterTodoItems);
 	TODO_FILTER_UNFINISHED.addEventListener('click', filterTodoItems);
-	ADD_TODO_BTN.addEventListener('click', (e) => {
-		e.preventDefault();
-		if (!alertInput()) {
-			return;
-		}
-		const todoText = NEW_TODO_INPUT.value.trim();
-		const todoItem = createTodoItem(todoText);
-		TODO_CONTAINER.appendChild(todoItem);
-		addTodoItemEventListeners(todoItem);
-		saveItemInLocalStorage(todoItem);
-		NEW_TODO_INPUT.value = '';
-	});
+	ADD_TODO_BTN.onclick = handleAddTodoButtonClick;
+
 	CANCEL_EDIT_BTN.addEventListener('click', hideModal);
 	SAVE_TODO_BTN.addEventListener('click', saveTodoItem);
 }

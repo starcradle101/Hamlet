@@ -1,10 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap');
+
 body {
 	background-color: #000;
 }
 
 h1 {
+	font-family: 'Archivo Black', sans-serif;
+	font-size: 5rem;
 	text-align: center;
-	color: #663dff;
+	background-image: linear-gradient(
+		45deg,
+		hsl(277deg 99% 48%) 1%,
+		hsl(306deg 100% 42%) 47%,
+		hsl(324deg 83% 51%) 51%,
+		hsl(344deg 78% 62%) 50%,
+		hsl(324deg 70% 41%) 49%,
+		hsl(298deg 100% 22%) 53%,
+		hsl(240deg 100% 20%) 99%
+	);
+	background-clip: text;
+	-webkit-background-clip: text;
+	color: transparent;
 	margin-top: 10%;
 }
 
@@ -13,29 +29,50 @@ h1 {
 	padding: 0 30%;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1000px) {
 	.todo-container {
-		padding: 0 5%;
+		padding: 0 10%;
+	}
+
+	h1 {
+		font-size: 4rem;
 	}
 }
 
 .todo-creator {
 	display: flex;
 	justify-content: space-between;
-	gap: 10px;
-	margin-bottom: 15px;
+	gap: 20px;
+	margin-bottom: 30px;
 	background-color: #fff;
-	padding: 5px 10px;
+	padding: 10px 20px;
+	border-radius: 5px;
+}
+
+.todo-input-container {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	flex-grow: 2;
+}
+
+.todo-input-container > span {
+	font-size: 14px;
+	position: absolute;
+	top: 44px;
+	display: none;
+	color: red;
 }
 
 #new-todo-input {
-	flex-grow: 2;
+	font-size: 16px;
 	border: none;
-	border-bottom: 1px solid #ccc;
+	border-bottom: 2px solid #ccc;
 }
 
 #new-todo-input:focus {
 	outline: none;
+	border-bottom: 2px solid #663dff;
 }
 
 #add-todo {
@@ -45,15 +82,17 @@ h1 {
 	padding: 5px 10px;
 	border-radius: 5px;
 	cursor: pointer;
+	justify-self: flex-start;
 }
 
 .todo-item {
 	background-color: #fff;
 	display: flex;
 	align-items: center;
+	margin-bottom: 5px;
 	padding: 10px;
-	border-bottom: 1px solid #ccc;
 	gap: 5px;
+	border-radius: 5px;
 }
 
 .todo-text {
@@ -128,20 +167,44 @@ h1 {
 #modal-content {
 	position: absolute;
 	background-color: #ffffff;
+	border-radius: 5px;
 	width: 300px;
 	height: 150px;
 	padding: 15px;
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
-	align-items: center;
+	justify-content: space-evenly;
 }
 
 #edit-todo-input {
+	width: 100%;
 	outline: none;
 	font-size: 16px;
 	display: block;
-	margin-bottom: 10px;
+	border: none;
+	border-bottom: 2px solid #ccc;
+}
+
+#edit-todo-input:focus {
+	border-bottom: 2px solid #663dff;
+}
+
+#todo-edit-container {
+	position: relative;
+}
+
+#todo-edit-container > span {
+	font-size: 12px;
+	position: absolute;
+	top: 25px;
+	display: none;
+	color: red;
+}
+
+#modal-btn-container {
+	display: flex;
+	justify-content: center;
+	gap: 20px;
 }
 
 #modal-btn-container button {
@@ -150,7 +213,6 @@ h1 {
 	padding: 5px 10px;
 	border-radius: 5px;
 	cursor: pointer;
-	margin-bottom: 10px;
 }
 
 #save-todo {

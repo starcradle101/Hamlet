@@ -63,6 +63,25 @@ function updateItemStatus(itemId, isComplete) {
 	updateItemInLocalStorage('todoItems', itemId, { isComplete });
 }
 
+function handleAddTodoButtonClick(e) {
+	e.preventDefault();
+
+	if (isInputEmpty(NEW_TODO_INPUT)) {
+		console.log(NEW_TODO_INPUT);
+		TODO_ADD_VALIDATION.style.display = 'inline';
+		return;
+	} else {
+		TODO_ADD_VALIDATION.style.display = 'none';
+	}
+
+	const todoText = NEW_TODO_INPUT.value.trim();
+	const todoItem = createTodoItem(todoText);
+	TODO_CONTAINER.appendChild(todoItem);
+	addTodoItemEventListeners(todoItem);
+	saveItemInLocalStorage(todoItem);
+	NEW_TODO_INPUT.value = '';
+}
+
 function addTodoItemEventListeners(todoItem) {
 	const deleteBtn = todoItem.querySelector('.delete-todo');
 	deleteBtn.addEventListener('click', deleteTodoItem);
@@ -153,23 +172,8 @@ function initialize() {
 	TODO_FILTER_ALL.addEventListener('click', filterTodoItems);
 	TODO_FILTER_FINISHED.addEventListener('click', filterTodoItems);
 	TODO_FILTER_UNFINISHED.addEventListener('click', filterTodoItems);
-	ADD_TODO_BTN.addEventListener('click', (e) => {
-		e.preventDefault();
+	ADD_TODO_BTN.onclick = handleAddTodoButtonClick;
 
-		if (isInputEmpty(NEW_TODO_INPUT)) {
-			TODO_ADD_VALIDATION.style.display = 'inline';
-			return;
-		} else {
-			TODO_ADD_VALIDATION.style.display = 'none';
-		}
-
-		const todoText = NEW_TODO_INPUT.value.trim();
-		const todoItem = createTodoItem(todoText);
-		TODO_CONTAINER.appendChild(todoItem);
-		addTodoItemEventListeners(todoItem);
-		saveItemInLocalStorage(todoItem);
-		NEW_TODO_INPUT.value = '';
-	});
 	CANCEL_EDIT_BTN.addEventListener('click', hideModal);
 	SAVE_TODO_BTN.addEventListener('click', saveTodoItem);
 }

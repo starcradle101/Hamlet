@@ -1,0 +1,44 @@
+.todoCreator {
+	display: flex;
+	justify-content: space-between;
+	gap: 20px;
+	margin-bottom: 40px;
+	background-color: #fff;
+	padding: 10px 20px;
+	border-radius: 5px;
+}
+
+.todoInputContainer {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	flex-grow: 2;
+}
+
+.todoAddValidation {
+	font-size: 14px;
+	position: absolute;
+	top: 40px;
+	color: red;
+}
+
+.newTodoInput {
+	font-size: 16px;
+	border: none;
+	border-bottom: 2px solid #ccc;
+}
+
+.newTodoInput:focus {
+	outline: none;
+	border-bottom: 2px solid #663dff;
+}
+
+.addTodo {
+	background-color: #663dff;
+	color: white;
+	border: none;
+	padding: 5px 10px;
+	border-radius: 5px;
+	cursor: pointer;
+	justify-self: flex-start;
+}

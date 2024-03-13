@@ -1,0 +1,43 @@
+.todoItemContainer {
+	background-color: #fff;
+	display: flex;
+	align-items: center;
+	margin-bottom: 5px;
+	padding: 10px;
+	gap: 5px;
+	border-radius: 5px;
+}
+
+.todoText {
+	flex-grow: 1;
+}
+
+.completed {
+	text-decoration: line-through;
+}
+
+.editTodo {
+	background-color: #9ade7b;
+	color: white;
+	border: none;
+	padding: 5px 10px;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+.editTodo:hover {
+	background-color: #88d663;
+}
+
+.deleteTodo {
+	background-color: #ff6347;
+	color: white;
+	border: none;
+	padding: 5px 10px;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+.deleteTodo:hover {
+	background-color: #ff473d;
+}

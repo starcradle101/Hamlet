@@ -1,0 +1,23 @@
+.todoFilter {
+	display: flex;
+	justify-content: flex-end;
+	margin-bottom: 5px;
+}
+
+.todoFilter > * {
+	color: #fff;
+}
+
+.todoFilter > button {
+	cursor: pointer;
+	background-color: #000;
+	border: none;
+}
+
+.todoFilter > button:hover {
+	color: #663dff;
+}
+
+.selected {
+	color: #e6169d;
+}

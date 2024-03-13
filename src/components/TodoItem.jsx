@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { toggleTodo, deleteTodo, updateTodo } from '../features/todoSlice';
-import { TodoEditModal } from './TodoEditModal';
+import TodoEditModal from './TodoEditModal';
 import style from '../styles/TodoItem.module.css';
 
-export const TodoItem = ({ id, todoText, isComplete }) => {
+const TodoItem = ({ id, todoText, isComplete }) => {
 	const [checked, setChecked] = useState(isComplete);
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [editedText, setEditedText] = useState(todoText);
@@ -64,3 +64,5 @@ export const TodoItem = ({ id, todoText, isComplete }) => {
 		</div>
 	);
 };
+
+export default TodoItem();

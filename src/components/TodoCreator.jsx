@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { addTodo } from '../features/todoSlice';
 import style from '../styles/TodoCreator.module.css';
 
-export const TodoCreator = () => {
+const TodoCreator = () => {
 	const [inputText, setInputText] = useState('');
 	const [showValidation, setShowValidation] = useState(false);
 	const dispatch = useDispatch();
@@ -48,3 +48,5 @@ export const TodoCreator = () => {
 		</form>
 	);
 };
+
+export default TodoCreator();

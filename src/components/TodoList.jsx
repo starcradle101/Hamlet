@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { TodoItem } from './TodoItem';
+import TodoItem from './TodoItem';
 import style from '../styles/TodoList.module.css';
 
-export const TodoList = () => {
+const TodoList = () => {
 	const [filterType, setFilterType] = useState('all');
 	const [filteredTodos, setFilteredTodos] = useState([]);
 	const todos = useSelector((state) => state.todos.todos);
@@ -71,3 +71,5 @@ export const TodoList = () => {
 		</div>
 	);
 };
+
+export default TodoList();

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import style from '../styles/TodoEditModal.module.css';
 
-export const TodoEditModal = ({ closeModal, todoText, onEditSave }) => {
+const TodoEditModal = ({ closeModal, todoText, onEditSave }) => {
 	const [editedText, setEditedText] = useState(todoText);
 	const [showValidation, setShowValidation] = useState(false);
 
@@ -52,3 +52,5 @@ export const TodoEditModal = ({ closeModal, todoText, onEditSave }) => {
 		</div>
 	);
 };
+
+export default TodoEditModal();

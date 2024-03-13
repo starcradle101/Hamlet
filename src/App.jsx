@@ -1,11 +1,11 @@
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { store, persistor } from './store';
-import { TodoCreator } from './components/TodoCreator';
-import { TodoList } from './components/TodoList';
+import TodoCreator from './components/TodoCreator';
+import TodoList from './components/TodoList';
 import './App.css';
 
-export const App = () => {
+const App = () => {
 	return (
 		<Provider store={store}>
 			<PersistGate loading={null} persistor={persistor}>
@@ -18,3 +18,5 @@ export const App = () => {
 		</Provider>
 	);
 };
+
+export default App();

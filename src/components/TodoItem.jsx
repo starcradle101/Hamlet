@@ -65,4 +65,4 @@ const TodoItem = ({ id, todoText, isComplete }) => {
 	);
 };
 
-export default TodoItem();
+export default TodoItem;

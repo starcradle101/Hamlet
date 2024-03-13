@@ -49,4 +49,4 @@ const TodoCreator = () => {
 	);
 };
 
-export default TodoCreator();
+export default TodoCreator;

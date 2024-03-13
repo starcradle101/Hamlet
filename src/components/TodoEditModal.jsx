@@ -53,4 +53,4 @@ const TodoEditModal = ({ closeModal, todoText, onEditSave }) => {
 	);
 };
 
-export default TodoEditModal();
+export default TodoEditModal;
